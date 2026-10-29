@@ -3,6 +3,16 @@ import { BrowserRouter, Routes, Route,Navigate } from "react-router-dom";
 
 function Main(){
      const[token,setToken]=useState(localStorage.getItem("token")||"")
+       const [errorOrSucess, setErrorOrSucces] = useState({
+    errorMsg: "",
+    succesMsg: ""
+});
+const [post,setPost]=useState({
+    title:"",
+    post:"",
+    file:null
+})
+const [fetchPost,setFetchPost]=useState([])
 
      useEffect(() => {
     if (!token) return;
@@ -46,5 +56,9 @@ function Main(){
     fetchPosts();
 }, [[token],[fetchPost.length]]);
 
-
+return(
+  <div>Hello</div>
+)
 }
+
+export default Main;
