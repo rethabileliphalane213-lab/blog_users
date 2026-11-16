@@ -4,6 +4,7 @@ function FullArticle() {
     const location = useLocation();
 
     const article = location.state?.article;
+    
 
     if (!article) {
         return (

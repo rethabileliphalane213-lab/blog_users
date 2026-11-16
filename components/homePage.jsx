@@ -15,14 +15,23 @@ function HomePage({ posts = [], onClick, options, deleteReq, notification, updat
         file: null
     });
 
-    let element
-    if (notification.errorMsg) {
-        element = <h4 className="border-b border-red-200 bg-red-50 px-6 py-3 text-center text-sm font-medium text-red-700">{notification.errorMsg}</h4>
-    }
-    if (notification.succesMsg) {
-        element = <h4 className="border-b border-emerald-200 bg-emerald-50 px-6 py-3 text-center text-sm font-medium text-emerald-700">{notification.succesMsg}</h4>
-    }
+   let element
 
+if (notification.errorMsg) {
+    element = (
+        <h4 className="fixed top-0 left-0 z-[100] w-full border-b border-red-200 bg-red-50 px-6 py-4 text-center text-sm font-semibold text-red-700 shadow-lg">
+            {notification.errorMsg}
+        </h4>
+    )
+}
+
+if (notification.succesMsg) {
+    element = (
+        <h4 className="fixed top-0 left-0 z-[100] w-full border-b border-emerald-200 bg-emerald-50 px-6 py-4 text-center text-sm font-semibold text-emerald-700 shadow-lg">
+            {notification.succesMsg}
+        </h4>
+    )
+}
     function getFullArticle(title, post, image) {
         navigate("/full-article", {
             state: { article: { title, post, image } }
