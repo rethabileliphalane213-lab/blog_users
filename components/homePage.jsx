@@ -1,8 +1,20 @@
+import Posts from "./postsComponent"
+import { Link,Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import FullArticle from "./fullArticle";
 
 
 
-function HomePage({ posts = [], onClick, options ,notification}) {
+function HomePage({ posts = [], onClick, options ,deleteReq,notification,updatepost,logout}) {
+    const navigate = useNavigate();
+    const [editingPost, setEditingPost] = useState(null);
 
+const [editForm, setEditForm] = useState({
+    title: "",
+    content: "",
+    file: null
+});
          let element
     if(notification.errorMsg){
         element=<h4 className="error-msg">{notification.errorMsg}</h4>
@@ -12,18 +24,61 @@ function HomePage({ posts = [], onClick, options ,notification}) {
     }
 
 
+    function getFullArticle(title, post, image) {
+        navigate("/full-article", {
+            state: {
+                article: {
+                    title,
+                    post,
+                    image
+                }
+            }
+        });
+    }
+    
+    function startEditing(post) {
+    setEditingPost(post);
 
-   
-  
+    setEditForm({
+        title: post.title || "",
+        content: post.content || "",
+        file: null
+    });
+}
 
+function handleEditChange(e) {
+    const { name, value, files } = e.target;
+
+    setEditForm(prev => ({
+        ...prev,
+        [name]: name === "file" ? files[0] : value
+    }));
+}
+
+async function handleEditSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("title", editForm.title);
+    formData.append("post", editForm.content);
+
+    if (editForm.file) {
+        formData.append("file", editForm.file);
+    }
+
+    const success = await updatepost(editingPost.id, formData);
+
+    if (success) {
+        setEditingPost(null);
+    }
+}
     return (
-        <div className="min-h-screen bg-slate-50 text-slate-800">
-            <div>
-               
-            </div>
+        <div className="min-h-screen w-full bg-slate-50 text-slate-800">
+          
          {element}
             <header className="bg-slate-950 text-white shadow-lg">
-                <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex w-full flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
                     <h1 className="text-2xl font-bold tracking-tight">
                         The Full-Stack <span className="text-cyan-400">Journal</span>
                     </h1>
@@ -32,6 +87,17 @@ function HomePage({ posts = [], onClick, options ,notification}) {
                         <a href="/" className="transition hover:text-cyan-400">Home</a>
                         <a href="#articles" className="transition hover:text-cyan-400">Articles</a>
                         <a href="#about" className="transition hover:text-cyan-400">About</a>
+                        <Link
+        to="/addPost"
+        className="transition hover:text-cyan-400">ADD Post</Link>
+
+<button
+        type="button"
+        onClick={logout}
+        className="bg-transparent p-0 text-sm font-medium text-slate-300 transition hover:text-cyan-400"
+    >
+        Log out
+    </button>
                     </nav>
                 </div>
             </header>
@@ -64,7 +130,7 @@ function HomePage({ posts = [], onClick, options ,notification}) {
                 </section>
 
                 {/* Articles Section */}
-                <section id="articles" className="mx-auto max-w-7xl px-6 py-16 sm:py-20">
+                <section id="articles" className="w-full px-6 py-16 sm:px-12 sm:py-20 lg:px-16">
                     <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                         <div>
                             <p className="mb-2 text-sm font-bold uppercase tracking-widest text-cyan-700">
@@ -92,7 +158,7 @@ function HomePage({ posts = [], onClick, options ,notification}) {
                             </p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
+                        <div >
                            
                             {posts.map((item) => (
                                 <article
@@ -102,12 +168,16 @@ function HomePage({ posts = [], onClick, options ,notification}) {
                                         <button type="button" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-2xl font-bold text-slate-700 shadow transition hover:bg-slate-100" onClick={() => onClick(item.id)}aria-label={`Options for ${item.title}`} aria-expanded={options === item.id} > :</button>
 
                                         {options === item.id && (
-                                            <div className="absolute right-0 mt-2 w-36 overflow-hidden rounded-xl border border-slate-200 bg-white py-1 shadow-xl">  </div>
+                                            <div className="absolute right-0 mt-2 w-36 overflow-hidden rounded-xl border border-slate-200 bg-white py-1 shadow-xl">
+                                               
+                                                <button  onClick={()=>startEditing(item)} type="button" className="block w-full px-4 py-3 text-left text-sm font-medium text-slate-700 transition hover:bg-slate-100" >   Edit </button>
+                                                <button  type="button" onClick={()=>deleteReq(item.id)} className="block w-full px-4 py-3 text-left text-sm font-medium text-red-600 transition hover:bg-red-50" > Delete  </button>
+                                            </div>
                                         )}
                                     </div>
 
                                     {/* Article Image */}
-                                    <div className="h-52 overflow-hidden rounded-t-2xl bg-slate-200">
+                                    <div className="h-80 w-full overflow-hidden rounded-t-2xl bg-slate-200">
                                         {item.imagePath && (
                                             <img
                                                 src={item.imagePath}
@@ -118,7 +188,7 @@ function HomePage({ posts = [], onClick, options ,notification}) {
                                     </div>
 
                                     {/* Article Content */}
-                                    <div className="p-6">
+                                    <div className="min-h-64 p-6">
                                         <p className="mb-3 text-xs font-bold uppercase tracking-widest text-cyan-700">
                                             Developer Journal
                                         </p>
@@ -131,21 +201,92 @@ function HomePage({ posts = [], onClick, options ,notification}) {
                                             {item.content}
                                         </p>
 
-                                        <button
+                                        <button onClick={()=>getFullArticle(item.title,item.content,item.imagePath)}
                                             type="button"
                                             className="mt-6 inline-flex items-center gap-2 font-bold text-cyan-700 transition hover:text-cyan-900"
                                         >
-                                            Read More <span>?</span>
+                                            Read More 
                                         </button>
                                     </div>
+                                    <button >Comments</button>
                                 </article>
                             ))}
 
+                            
+{editingPost && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+        <form
+            onSubmit={handleEditSubmit}
+            className="w-full max-w-lg space-y-4 rounded-xl bg-white p-6 shadow-xl"
+        >
+            <h2 className="text-xl font-bold text-slate-900">
+                Edit Post
+            </h2>
 
+            <label className="block">
+                <span className="mb-1 block text-sm font-medium">
+                    Title
+                </span>
+
+                <input
+                    name="title"
+                    value={editForm.title}
+                    onChange={handleEditChange}
+                    required
+                    className="w-full rounded-lg border p-3"
+                />
+            </label>
+
+            <label className="block">
+                <span className="mb-1 block text-sm font-medium">
+                    Content
+                </span>
+
+                <textarea
+                    name="content"
+                    value={editForm.content}
+                    onChange={handleEditChange}
+                    required
+                    rows={6}
+                    className="w-full rounded-lg border p-3"
+                />
+            </label>
+
+            <label className="block">
+                <span className="mb-1 block text-sm font-medium">
+                    Replace image (optional)
+                </span>
+
+                <input
+                    type="file"
+                    name="file"
+                    accept="image/*"
+                    onChange={handleEditChange}
+                    className="w-full"
+                />
+            </label>
+
+            <div className="flex justify-end gap-3">
+                <button
+                    type="button"
+                    onClick={() => setEditingPost(null)}
+                    className="rounded-lg border px-4 py-2"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    className="rounded-lg bg-cyan-600 px-4 py-2 font-semibold text-white"
+                >
+                    Save Changes
+                </button>
+            </div>
+        </form>
     </div>
 )}
-                        
-                    
+                        </div>
+                    )}
                 </section>
 
                 {/* About Section */}
