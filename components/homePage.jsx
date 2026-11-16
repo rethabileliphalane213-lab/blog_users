@@ -1,6 +1,3 @@
-import Posts from "./postsComponent"
-import { Link } from "react-router-dom";
-import { useState } from "react";
 
 
 
@@ -22,7 +19,7 @@ function HomePage({ posts = [], onClick, options ,notification}) {
     return (
         <div className="min-h-screen bg-slate-50 text-slate-800">
             <div>
-                <Link to="/addPost">ADD Post</Link>
+               
             </div>
          {element}
             <header className="bg-slate-950 text-white shadow-lg">
