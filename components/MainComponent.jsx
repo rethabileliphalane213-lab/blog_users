@@ -240,10 +240,10 @@ async function AddComment(postId) {
             "Authorization": `Bearer ${token}`
             
         },
-        body:{
+        body:JSON.stringify({
             postId:postId,
             comment:comments
-        }
+        })
         
     }
         )
@@ -666,7 +666,7 @@ setErrorOrSucces({
                 />
                     <Route
                     path="/full-article"
-                    element={<FullArticle onClick={AddComment} onChange={commentsChnage}/>}
+                    element={<FullArticle onClick={AddComment} onChange={commentsChnage} comments={comments}/>}
                 />
 
                 <Route

@@ -1,6 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 
-function FullArticle({onChange,onClick}) {
+function FullArticle({onChange,onClick,comments}) {
     const location = useLocation();
 
     const article = location.state?.article;
@@ -94,6 +94,7 @@ function FullArticle({onChange,onClick}) {
                                 name="comment"
                                 onChange={onChange}
                                 rows={12}
+                                value={comments}
                                 placeholder="Enter your Comment here!"
                                 className="w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 leading-7 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10"
                             />
