@@ -1,11 +1,10 @@
-
 import Posts from "./postsComponent"
 import { Link, Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import FullArticle from "./fullArticle";
 
-function HomePage({ posts = [], onClick, options, deleteReq, notification, updatepost, logout }) {
+function HomePage({ posts = [], onClick, options, deleteReq, notification, updatepost, logout, backendUrl, token, setErrorOrSucces }) {
     const navigate = useNavigate();
     const [editingPost, setEditingPost] = useState(null);
       const [getComments,setGetComments]=useState([])
@@ -80,12 +79,6 @@ if (notification.succesMsg) {
                 succesMsg: ""
             });
         }
-    }
-
-
-
-
-     
     }
 
     function startEditing(post) {
