@@ -36,7 +36,7 @@ if (notification.succesMsg) {
 
          try {
             const response = await fetch(
-                `${backendUrl}/comments/${postId}`,
+                `${backendUrl}/post/comments/${postId}`,
                 {
                     method: "GET",
                     headers: {
@@ -72,7 +72,7 @@ if (notification.succesMsg) {
 });
 
         } catch (e) {
-            console.error(e);
+            console.error("failed to load page comments. check.....",e);
 
             setErrorOrSucces({
                 errorMsg: "Unable to connect to the server",
