@@ -17,7 +17,7 @@ function Main() {
     const[token,setToken]=useState(localStorage.getItem("token")||"")
     const [refreshPosts, setRefreshPosts] = useState(false);
     const [comments,setComments]=useState("")
-    const [getComments,setGetComments]=useState([])
+
     const [crudOptionsShow, setCrudOptionsShow] = useState(null);
     const [showInput,setShowInput]=useState({
         otpPin:false,
@@ -68,47 +68,6 @@ useEffect(()=>{
 
 
 
-useEffect(() => {
-    if (!token) return;
-
-    async function fetchPosts() {
-        try {
-            const response = await fetch(
-                `${backendUrl}/comments`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
-                }
-            );
-
-            const data = await response.json();
-
-            if (!response.ok || data.error) {
-                setErrorOrSucces({
-                    errorMsg: data.error || "Failed to fetch comments. Please try again.",
-                    succesMsg: ""
-                });
-                return;
-            }
-
-            // Store the retrieved posts in state
-            setGetComments(data.comments)
-            console.log(data.comments)
-
-        } catch (e) {
-            console.error(e);
-
-            setErrorOrSucces({
-                errorMsg: "Unable to connect to the server",
-                succesMsg: ""
-            });
-        }
-    }
-
-    fetchPosts();
-}, [token,refreshPosts]);
 
 
 

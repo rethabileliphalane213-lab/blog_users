@@ -8,6 +8,7 @@ import FullArticle from "./fullArticle";
 function HomePage({ posts = [], onClick, options, deleteReq, notification, updatepost, logout }) {
     const navigate = useNavigate();
     const [editingPost, setEditingPost] = useState(null);
+      const [getComments,setGetComments]=useState([])
 
     const [editForm, setEditForm] = useState({
         title: "",
@@ -32,10 +33,59 @@ if (notification.succesMsg) {
         </h4>
     )
 }
-    function getFullArticle(title, post, image) {
-        navigate("/full-article", {
-            state: { article: { title, post, image } }
-        });
+    async function getFullArticle(title, post, image,postId) {
+
+         try {
+            const response = await fetch(
+                `${backendUrl}/comments/${postId}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+             
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok || data.error) {
+                setErrorOrSucces({
+                    errorMsg: data.error || "Failed to fetch comments. Please try again.",
+                    succesMsg: ""
+                });
+                return;
+            }
+
+            // Store the retrieved posts in state
+            setGetComments(data.comments)
+            console.log(data.comments)
+              navigate("/full-article", {
+    state: {
+        article: {
+            id: postId,
+            title,
+            post,
+            image,
+            getComments: data.comments
+        }
+    }
+});
+
+        } catch (e) {
+            console.error(e);
+
+            setErrorOrSucces({
+                errorMsg: "Unable to connect to the server",
+                succesMsg: ""
+            });
+        }
+    }
+
+
+
+
+     
     }
 
     function startEditing(post) {
@@ -227,7 +277,7 @@ if (notification.succesMsg) {
 
                                         <div className="mt-auto pt-6">
                                             <button
-                                                onClick={() => getFullArticle(item.title, item.content, item.imagePath)}
+                                                onClick={() => getFullArticle(item.title, item.content, item.imagePath,item.id)}
                                                 type="button"
                                                 className="inline-flex items-center gap-2 font-bold text-cyan-700 transition hover:gap-3 hover:text-cyan-900"
                                             >
