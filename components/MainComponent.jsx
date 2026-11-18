@@ -666,6 +666,9 @@ setErrorOrSucces({
     notification={errorOrSucess}
     updatepost={updatePost}
     logout={logout}
+     backendUrl={backendUrl}
+    token={token}
+    setErrorOrSucces={setErrorOrSucces}
 />
                     }
                 />
