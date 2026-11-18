@@ -76,36 +76,45 @@ function FullArticle({onChange,onClick,comments}) {
                     </p>
                 </article>
 
-                //comment section
-                <form onSubmit={(e)=>{
-                    e.preventDefault()
-                    onClick(article.id)
-                }}>
-                     <div>
-                            <label
-                                htmlFor="comment"
-                                className="mb-2 block text-sm font-semibold text-slate-700"
-                            >
-                                Enter comment 
-                            </label>
+               {/* Comment section */}
+<div className="mt-10 rounded-2xl bg-white p-6 shadow-sm sm:p-8">
+    <h2 className="mb-6 text-2xl font-bold text-slate-900">
+        Add a Comment
+    </h2>
 
-                            <textarea
-                                id="comment"
-                                name="comment"
-                                onChange={onChange}
-                                rows={12}
-                                value={comments}
-                                placeholder="Enter your Comment here!"
-                                className="w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 leading-7 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10"
-                            />
-                        </div>
-                        <button
-                        type="submit" 
-                        className="w-full rounded-xl bg-cyan-700 px-6 py-3.5 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-cyan-800 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-cyan-500/20"
-                    >
-                        Add Comment
-                    </button>
-                </form>
+    <form
+        onSubmit={(e) => {
+            e.preventDefault();
+            onClick(article.id);
+        }}
+    >
+        <div>
+            <label
+                htmlFor="comment"
+                className="mb-2 block text-sm font-semibold text-slate-700"
+            >
+                Enter comment
+            </label>
+
+            <textarea
+                id="comment"
+                name="comment"
+                onChange={onChange}
+                rows={8}
+                value={comments}
+                placeholder="Enter your Comment here!"
+                className="w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 leading-7 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10"
+            />
+        </div>
+
+        <button
+            type="submit"
+            className="mt-4 w-full rounded-xl bg-cyan-700 px-6 py-3.5 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-cyan-800 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-cyan-500/20"
+        >
+            Add Comment
+        </button>
+    </form>
+</div>
 
                 {/* Bottom Back Button */}
                 <div className="mt-10">
