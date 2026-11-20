@@ -16,6 +16,8 @@ function Main() {
     const backendUrl=import.meta.env.VITE_BACKEND_URL
     ////////////////////////////////////////////////
     const [loading,setLoading]=useState(false)
+    const [signinLoading,setSigninLoading]=useState(false)
+
     const[token,setToken]=useState(localStorage.getItem("token")||"")
     const [refreshPosts, setRefreshPosts] = useState(false);
     const [comments,setComments]=useState("")
@@ -187,7 +189,7 @@ setPost({
         errorMsg: "",
         succesMsg: ""
     });
-
+    setSigninLoading(true)
     try {
         const response = await fetch(
             `${backendUrl}/signin/not_admin`,
@@ -226,6 +228,8 @@ setToken(data.token);
             errorMsg: "Unable to connect to the server",
             succesMsg: ""
         });
+    }finally {
+        setLoading(false);
     }
 }
 
@@ -713,6 +717,7 @@ setErrorOrSucces({
                             onChange={generalChnage}
                             onclick={btnClick}
                             notification={errorOrSucess}
+                            loading={signinLoading}
                         />
                     }
                 />

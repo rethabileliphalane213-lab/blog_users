@@ -1,7 +1,8 @@
+import { RiseLoader } from "react-spinners";
 
 import { Link } from "react-router-dom";
 
-function Signin({ general, onChange, onclick, notification }) {
+function Signin({ general, onChange, onclick, notification,loading }) {
     let element
 
 if (notification.errorMsg) {
@@ -19,6 +20,14 @@ if (notification.succesMsg) {
         </h4>
     )
 }
+const loadingStyle = (
+    <RiseLoader
+        color="#22d3ee"
+        loading={loading}
+        size={8}
+        aria-label="Loading Spinner"
+    />
+);
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-slate-50 px-5 py-12">
@@ -170,7 +179,7 @@ if (notification.succesMsg) {
                         type="submit"
                         className="w-full rounded-xl bg-cyan-700 px-6 py-3.5 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-cyan-800 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-cyan-500/20"
                     >
-                        Create Account
+                       {loading?loadingStyle:"Create Account"}
                     </button>
 
                  
