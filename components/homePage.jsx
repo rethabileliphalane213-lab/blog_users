@@ -286,12 +286,11 @@ const loadingStyle =
                                                 type="button"
                                                 className="inline-flex items-center gap-2 font-bold text-cyan-700 transition hover:gap-3 hover:text-cyan-900"
                                             >
-                                               {loading?loadingStyle:`Read More <span>→</span>`}
+                                               {loading?loadingStyle:`Read More`}
                                             </button>
                                         </div>
                                     </div>
 
-                                    {/* Comments */}
                                     
                                 </article>
                             ))}
