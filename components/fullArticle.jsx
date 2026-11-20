@@ -7,14 +7,14 @@ function FullArticle({onChange,onClick,comments,loading}) {
 
     const article = location.state?.article;
     
-const loadingStyle = (
+const loadingStyle = 
     <RiseLoader
         color="#22d3ee"
         loading={loading}
         size={8}
         aria-label="Loading Spinner"
     />
-);
+
     if (!article) {
         return (
             <div className="flex min-h-screen items-center justify-center bg-slate-50 px-6">

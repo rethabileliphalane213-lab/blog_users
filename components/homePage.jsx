@@ -2,12 +2,15 @@ import Posts from "./postsComponent"
 import { Link, Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { RiseLoader } from "react-spinners";
+
 import FullArticle from "./fullArticle";
 
-function HomePage({ posts = [], onClick, options, deleteReq, notification, updatepost, logout, backendUrl, token, setErrorOrSucces }) {
+function HomePage({ posts = [], onClick, options, deleteReq, notification, updatepost, logout, backendUrl, token, setErrorOrSucces, }) {
     const navigate = useNavigate();
     const [editingPost, setEditingPost] = useState(null);
       const [getComments,setGetComments]=useState([])
+      const [loading,setLoading]=useState(false)
 
     const [editForm, setEditForm] = useState({
         title: "",
@@ -32,8 +35,15 @@ if (notification.succesMsg) {
         </h4>
     )
 }
+const loadingStyle = 
+    <RiseLoader
+        color="#22d3ee"
+        loading={loading}
+        size={8}
+        aria-label="Loading Spinner"
+    />
     async function getFullArticle(title, post, image,postId) {
-
+        setLoading(true)
          try {
             const response = await fetch(
                 `${backendUrl}/post/comments/${postId}`,
@@ -78,7 +88,9 @@ if (notification.succesMsg) {
                 errorMsg: "Unable to connect to the server",
                 succesMsg: ""
             });
-        }
+        }finally {
+        setLoading(false);
+    }
     }
 
     function startEditing(post) {
@@ -128,7 +140,7 @@ if (notification.succesMsg) {
                             to="/addPost"
                             className="rounded-lg bg-cyan-400 px-4 py-2 font-bold text-slate-950 transition hover:bg-cyan-300"
                         >
-                            Add Post
+                            {loading?loadingStyle:"Add Post"}
                         </Link>
 
                         <button
@@ -274,7 +286,7 @@ if (notification.succesMsg) {
                                                 type="button"
                                                 className="inline-flex items-center gap-2 font-bold text-cyan-700 transition hover:gap-3 hover:text-cyan-900"
                                             >
-                                                Read More <span>→</span>
+                                               {loading?loadingStyle:`Read More <span>→</span>`}
                                             </button>
                                         </div>
                                     </div>
