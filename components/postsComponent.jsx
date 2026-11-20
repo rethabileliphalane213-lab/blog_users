@@ -16,7 +16,7 @@ function Posts({ onChange,onClick,notification,loading}){
         }
     }
 
-      let element
+     
 
 let element
 
