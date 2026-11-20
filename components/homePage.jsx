@@ -58,7 +58,7 @@ if (notification.succesMsg) {
 
             // Store the retrieved posts in state
             setGetComments(data.comments)
-            console.log(data.comments)
+            console.log('hereare the comments fetched',data.comments)
               navigate("/full-article", {
     state: {
         article: {

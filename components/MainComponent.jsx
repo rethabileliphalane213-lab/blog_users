@@ -253,6 +253,7 @@ async function AddComment(postId) {
     }
         )
         const data=await response.json()
+        console.log("here's you response for adding a comment",data)
         if (!response.ok || data.error) {
     setErrorOrSucces({
         errorMsg: data.error || "Failed to Add Comment. Please try again.",
