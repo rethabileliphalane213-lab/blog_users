@@ -1,5 +1,6 @@
 import { useState,useEffect } from "react";
 import { BrowserRouter, Routes, Route,Navigate, } from "react-router-dom";
+import { RiseLoader } from "react-spinners";
 
 
 
@@ -14,6 +15,7 @@ function Main() {
 
     const backendUrl=import.meta.env.VITE_BACKEND_URL
     ////////////////////////////////////////////////
+    const [loading,setLoading]=useState(false)
     const[token,setToken]=useState(localStorage.getItem("token")||"")
     const [refreshPosts, setRefreshPosts] = useState(false);
     const [comments,setComments]=useState("")
@@ -236,6 +238,7 @@ async function AddComment(postId) {
         });
         return
     }
+    setLoading(true)
 
      try{
         const response=await fetch(`${backendUrl}/post/comments`,
@@ -254,6 +257,9 @@ async function AddComment(postId) {
     }
         )
         const data=await response.json()
+        if(data){
+            setLoading(false)
+        }
         console.log("here's you response for adding a comment",data)
         if (!response.ok || data.error) {
     setErrorOrSucces({
@@ -676,7 +682,7 @@ setErrorOrSucces({
                 />
                     <Route
                     path="/full-article"
-                    element={<FullArticle onClick={AddComment} onChange={commentsChnage} comments={comments}/>}
+                    element={<FullArticle onClick={AddComment} onChange={commentsChnage} comments={comments} loading={loading}/>}
                 />
 
                 <Route

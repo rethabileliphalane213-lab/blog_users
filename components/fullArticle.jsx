@@ -1,11 +1,20 @@
 import { useLocation, Link } from "react-router-dom";
+import { RiseLoader } from "react-spinners";
 
-function FullArticle({onChange,onClick,comments}) {
+
+function FullArticle({onChange,onClick,comments,loading}) {
     const location = useLocation();
 
     const article = location.state?.article;
     
-
+const loadingStyle= <RiseLoader
+        color={color}
+        loading={loading}
+        cssOverride={override}
+        size={150}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
     if (!article) {
         return (
             <div className="flex min-h-screen items-center justify-center bg-slate-50 px-6">
@@ -117,7 +126,7 @@ function FullArticle({onChange,onClick,comments}) {
             type="submit"
             className="rounded-xl bg-slate-900 px-6 py-3 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-cyan-500/20"
         >
-            Add Comment
+            {loading?loadingStyle:"Add Comment"}
         </button>
     </div>
 </form>
