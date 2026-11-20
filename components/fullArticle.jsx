@@ -7,14 +7,14 @@ function FullArticle({onChange,onClick,comments,loading}) {
 
     const article = location.state?.article;
     
-const loadingStyle= <RiseLoader
-        color={color}
+const loadingStyle = (
+    <RiseLoader
+        color="#22d3ee"
         loading={loading}
-        cssOverride={override}
-        size={150}
+        size={8}
         aria-label="Loading Spinner"
-        data-testid="loader"
-      />
+    />
+);
     if (!article) {
         return (
             <div className="flex min-h-screen items-center justify-center bg-slate-50 px-6">
@@ -122,12 +122,13 @@ const loadingStyle= <RiseLoader
     </div>
 
     <div className="flex justify-end">
-        <button
-            type="submit"
-            className="rounded-xl bg-slate-900 px-6 py-3 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-cyan-500/20"
-        >
-            {loading?loadingStyle:"Add Comment"}
-        </button>
+       <button
+    type="submit"
+    disabled={loading}
+    className="rounded-xl bg-slate-900 px-6 py-3 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-cyan-500/20 disabled:cursor-not-allowed disabled:opacity-70"
+>
+    {loading ? loadingStyle : "Add Comment"}
+</button>
     </div>
 </form>
      {article.getComments.length === 0 ? (

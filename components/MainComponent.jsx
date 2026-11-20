@@ -257,9 +257,7 @@ async function AddComment(postId) {
     }
         )
         const data=await response.json()
-        if(data){
-            setLoading(false)
-        }
+        
         console.log("here's you response for adding a comment",data)
         if (!response.ok || data.error) {
     setErrorOrSucces({
@@ -284,6 +282,8 @@ if (data.succes) {
             errorMsg: "Unable to connect to the server",
             succesMsg: ""
         });
+    } finally {
+        setLoading(false);
     }
     
 }
