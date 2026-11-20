@@ -83,37 +83,44 @@ function FullArticle({onChange,onClick,comments}) {
     </h2>
 
     <form
-        onSubmit={(e) => {
-            e.preventDefault();
-            onClick(article.id);
-        }}
-    >
-        <div>
-            <label
-                htmlFor="comment"
-                className="mb-2 block text-sm font-semibold text-slate-700"
-            >
-                Enter comment
-            </label>
+    onSubmit={(e) => {
+        e.preventDefault();
+        onClick(article.id);
+    }}
+    className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-sm sm:p-8"
+>
+    <div className="mb-5">
+        <label
+            htmlFor="comment"
+            className="mb-2 block text-sm font-bold uppercase tracking-wider text-slate-700"
+        >
+            Leave a Comment
+        </label>
 
-            <textarea
-                id="comment"
-                name="comment"
-                onChange={onChange}
-                rows={8}
-                value={comments}
-                placeholder="Enter your Comment here!"
-                className="w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 leading-7 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10"
-            />
-        </div>
+        <p className="mb-4 text-sm text-slate-500">
+            Share your thoughts on this article.
+        </p>
 
+        <textarea
+            id="comment"
+            name="comment"
+            onChange={onChange}
+            rows={6}
+            value={comments}
+            placeholder="Write your comment here..."
+            className="w-full resize-y rounded-xl border border-slate-300 bg-white px-4 py-4 text-base leading-7 text-slate-800 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10"
+        />
+    </div>
+
+    <div className="flex justify-end">
         <button
             type="submit"
-            className="mt-4 w-full rounded-xl bg-cyan-700 px-6 py-3.5 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-cyan-800 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-cyan-500/20"
+            className="rounded-xl bg-slate-900 px-6 py-3 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-cyan-500/20"
         >
             Add Comment
         </button>
-    </form>
+    </div>
+</form>
      {article.getComments.length === 0 ? (
     <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 px-6 py-8 text-center">
         <p className="text-sm font-medium text-slate-500">
@@ -128,7 +135,7 @@ function FullArticle({onChange,onClick,comments}) {
                     key={comment.id}
                     className="rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-sm"
                 >
-                    {/* Comment header */}
+                   
                     <div className="mb-4 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-sm font-bold text-cyan-400">
@@ -147,7 +154,7 @@ function FullArticle({onChange,onClick,comments}) {
                         </div>
                     </div>
 
-                    {/* Comment body */}
+                   
                     <div className="border-l-2 border-cyan-500 pl-4">
                         <p className="text-base leading-7 text-slate-600">
                             {comment.comment}
@@ -160,7 +167,6 @@ function FullArticle({onChange,onClick,comments}) {
 )}
 </div>
 
-                {/* Bottom Back Button */}
                 <div className="mt-10">
                     <Link
                         to="/"
