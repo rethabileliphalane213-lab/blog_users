@@ -703,7 +703,7 @@ setErrorOrSucces({
                 />
                     <Route
                     path="/full-article"
-                    element={<FullArticle onClick={AddComment} onChange={commentsChnage} comments={comments} loading={loading}/>}
+                    element={<FullArticle onClick={AddComment} onChange={commentsChnage} comments={comments} loading={loading} notification={errorOrSucess}/>}
                 />
 
                 <Route

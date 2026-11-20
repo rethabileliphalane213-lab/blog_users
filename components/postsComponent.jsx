@@ -18,6 +18,8 @@ function Posts({ onChange,onClick,notification,loading}){
 
       let element
 
+let element
+
 if (notification.errorMsg) {
     element = (
         <h4 className="fixed top-0 left-0 z-[100] w-full border-b border-red-200 bg-red-50 px-6 py-4 text-center text-sm font-semibold text-red-700 shadow-lg">
