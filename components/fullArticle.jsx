@@ -114,14 +114,50 @@ function FullArticle({onChange,onClick,comments}) {
             Add Comment
         </button>
     </form>
-    { getComments.length===0?<h5>Be the first o comment</h5>:getComments.map(comment=>{
-        return(
-            <div>
-                <p>{comment.name} {comments.surname}</p>
-                <p>{comment.comment}</p>
-            </div>
-        )
-    })}
+     {article.getComments.length === 0 ? (
+    <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 px-6 py-8 text-center">
+        <p className="text-sm font-medium text-slate-500">
+            Be the first to comment
+        </p>
+    </div>
+) : (
+    <div className="mt-8 space-y-5">
+        {article.getComments.map(comment => {
+            return (
+                <div
+                    key={comment.id}
+                    className="rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-sm"
+                >
+                    {/* Comment header */}
+                    <div className="mb-4 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-sm font-bold text-cyan-400">
+                                {comment.name.charAt(0).toUpperCase()}
+                            </div>
+
+                            <div>
+                                <p className="font-semibold text-slate-900">
+                                    {comment.name} {comment.surname}
+                                </p>
+
+                                <p className="text-xs font-medium uppercase tracking-wider text-slate-400">
+                                    Reader Comment
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Comment body */}
+                    <div className="border-l-2 border-cyan-500 pl-4">
+                        <p className="text-base leading-7 text-slate-600">
+                            {comment.comment}
+                        </p>
+                    </div>
+                </div>
+            );
+        })}
+    </div>
+)}
 </div>
 
                 {/* Bottom Back Button */}
