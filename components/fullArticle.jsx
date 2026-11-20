@@ -114,6 +114,14 @@ function FullArticle({onChange,onClick,comments}) {
             Add Comment
         </button>
     </form>
+    { getComments.length===0?<h5>Be the first o comment</h5>:getComments.map(comment=>{
+        return(
+            <div>
+                <p>{comment.name} {comments.surname}</p>
+                <p>{comment.comment}</p>
+            </div>
+        )
+    })}
 </div>
 
                 {/* Bottom Back Button */}
