@@ -17,6 +17,7 @@ function Main() {
     ////////////////////////////////////////////////
     const [loading,setLoading]=useState(false)
     const [signinLoading,setSigninLoading]=useState(false)
+    const [loginLoading,setLoginLoadin]=useState(false)
 
     const[token,setToken]=useState(localStorage.getItem("token")||"")
     const [refreshPosts, setRefreshPosts] = useState(false);
@@ -630,6 +631,13 @@ function logout(){
 }
 async function loginClick(e){ 
     e.preventDefault() 
+    if(!logger.email.trim()||!logger.password.trim()){
+        return  setErrorOrSucces({
+            errorMsg: "Empty Email Or Password!",
+            succesMsg: ""
+        });
+    }
+    setLoginLoadin(true)
     try{ 
         const response = await fetch( `${backendUrl}/login/users`, 
             { method: "POST",
@@ -657,9 +665,12 @@ setErrorOrSucces({
     succesMsg: data.succes || "Login successful"
 });
 
-                 }catch(e){ 
-                    console.log(e) } 
-                }
+    }catch(e){ 
+                    console.log(e) }finally {
+        setLoading(false);
+    } 
+
+ }
 
 
 
@@ -729,6 +740,7 @@ setErrorOrSucces({
                             onChange={loghandleChange}
                             onclick={loginClick}
                             notification={errorOrSucess}
+                            loading={loginLoading}
                         />
                     }
                 />
