@@ -1,8 +1,10 @@
 
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { RiseLoader } from "react-spinners";
 
-function Posts({logout ,onChange,onClick,notification}){
+
+function Posts({ onChange,onClick,notification,loading}){
     const [gotoHome,setGoToHome]=useState(false)
 
 
@@ -31,6 +33,13 @@ if (notification.succesMsg) {
         </h4>
     )
 }
+const loadingStyle = 
+    <RiseLoader
+        color="#22d3ee"
+        loading={loading}
+        size={8}
+        aria-label="Loading Spinner"
+    />
 if(gotoHome){
     return(
         <Navigate to="/" />
@@ -58,13 +67,7 @@ if(gotoHome){
                     </p>
                 </div>
 
-                <button
-                    type="button"
-                    onClick={logout}
-                    className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-red-200 hover:bg-red-50 hover:text-red-600"
-                >
-                    Log out
-                </button>
+                
             </header>
 
             {/* Form */}
@@ -160,7 +163,7 @@ if(gotoHome){
                                 onClick={handlePublish}
                                 className="w-full rounded-xl bg-cyan-700 px-7 py-3 font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-cyan-800 hover:shadow-md sm:w-auto"
                             >
-                                Publish Article
+                                {loading?loadingStyle:"Publish Article"}
                             </button>
                         </div>
 

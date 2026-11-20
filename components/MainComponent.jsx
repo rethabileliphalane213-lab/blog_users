@@ -18,6 +18,7 @@ function Main() {
     const [loading,setLoading]=useState(false)
     const [signinLoading,setSigninLoading]=useState(false)
     const [loginLoading,setLoginLoadin]=useState(false)
+    const [addPostLoading,setAddPostLoading]=useState(false)
 
 
     const[token,setToken]=useState(localStorage.getItem("token")||"")
@@ -231,7 +232,7 @@ setToken(data.token);
             succesMsg: ""
         });
     }finally {
-        setLoading(false);
+        setSigninLoading(false);
     }
 }
 
@@ -350,6 +351,7 @@ async function AddPostBtnClick(e) {
 
         return false;
     }
+    setAddPostLoading(true)
 
     try {
         const formData = new FormData();
@@ -399,6 +401,9 @@ return true;
         });
 
         return false;
+    }
+    finally {
+        setAddPostLoading(false);
     }
 }
 
@@ -668,7 +673,7 @@ setErrorOrSucces({
 
     }catch(e){ 
                     console.log(e) }finally {
-        setLoading(false);
+        setLoginLoadin(false);
     } 
 
  }

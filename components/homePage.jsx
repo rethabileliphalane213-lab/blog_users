@@ -292,11 +292,7 @@ const loadingStyle =
                                     </div>
 
                                     {/* Comments */}
-                                    <div className="border-t border-slate-100 px-6 py-4">
-                                        <button className="text-sm font-semibold text-slate-500 transition hover:text-cyan-700">
-                                            Comments
-                                        </button>
-                                    </div>
+                                    
                                 </article>
                             ))}
                         </div>
