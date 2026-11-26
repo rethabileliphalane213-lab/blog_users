@@ -20,11 +20,11 @@ function HomePage({ posts = [], onClick, options, deleteReq, notification, updat
     let username=""
     if(user.role && user.role ==="Admin"){
         username=(
-            <h2>{user.role}</h2>
-        )
+            <h2 className="mt-1 text-sm font-semibold text-cyan-400"> {user.role}</h2>
+)
     }else{
         username=(
-            <h2>{user.name} {user.surname}</h2>
+            <h2 className="mt-1 text-sm font-medium text-slate-300">{user.name} {user.surname}</h2>
         )
     }
 
@@ -136,12 +136,12 @@ const loadingStyle =
 
             {/* Header */}
             <header className="sticky top-0 z-30 border-b border-slate-800 bg-slate-950 text-white shadow-lg">
-                {username}
+                
                 <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
                     <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
                         The Full-Stack <span className="text-cyan-400">Journal</span>
                     </h1>
-
+                    {username}
                     <nav className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-medium text-slate-300">
                         <a href="/" className="transition hover:text-cyan-400">Home</a>
                         <a href="#articles" className="transition hover:text-cyan-400">Articles</a>
