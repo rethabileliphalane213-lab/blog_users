@@ -6,7 +6,7 @@ import { RiseLoader } from "react-spinners";
 
 import FullArticle from "./fullArticle";
 
-function HomePage({ posts = [], onClick, options, deleteReq, notification, updatepost, logout, backendUrl, token, setErrorOrSucces, }) {
+function HomePage({ posts = [], onClick, options, deleteReq, notification, updatepost, logout, backendUrl, token, setErrorOrSucces,user }) {
     const navigate = useNavigate();
     const [editingPost, setEditingPost] = useState(null);
       const [getComments,setGetComments]=useState([])
@@ -17,6 +17,16 @@ function HomePage({ posts = [], onClick, options, deleteReq, notification, updat
         content: "",
         file: null
     });
+    let username=""
+    if(user.role && user.role ==="Admin"){
+        username=(
+            <h2>{user.role}</h2>
+        )
+    }else{
+        username=(
+            <h2>{user.name} {user.surname}</h2>
+        )
+    }
 
    let element
 
@@ -126,6 +136,7 @@ const loadingStyle =
 
             {/* Header */}
             <header className="sticky top-0 z-30 border-b border-slate-800 bg-slate-950 text-white shadow-lg">
+                {username}
                 <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
                     <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
                         The Full-Stack <span className="text-cyan-400">Journal</span>

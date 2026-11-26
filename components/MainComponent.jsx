@@ -22,6 +22,7 @@ function Main() {
 
 
     const[token,setToken]=useState(localStorage.getItem("token")||"")
+    const [user,setUser]=useState({})
     const [refreshPosts, setRefreshPosts] = useState(false);
     const [comments,setComments]=useState("")
 
@@ -219,6 +220,7 @@ function postHandleChange(e){
         }
         localStorage.setItem("token", data.token);
 setToken(data.token);
+setUser(data.user)
 
         if (data.succes) {
             setErrorOrSucces({
@@ -670,6 +672,7 @@ if (!response.ok || data.error || !data.token) {
 
 localStorage.setItem("token", data.token);
 setToken(data.token);
+setUser(data.user)
 
 setErrorOrSucces({
     errorMsg: "",
@@ -703,6 +706,7 @@ setErrorOrSucces({
      backendUrl={backendUrl}
     token={token}
     setErrorOrSucces={setErrorOrSucces}
+    user={user}
 />
                     }
                 />
@@ -719,7 +723,7 @@ setErrorOrSucces({
                             onChange={postHandleChange}
                             onClick={AddPostBtnClick}
                             notification={errorOrSucess}
-                            
+                            loading={setAddPostLoading}
                         />
                     }
                 />
